@@ -2,10 +2,12 @@ import { useState } from "react";
 // import * as Joi from "joi";
 import Input from "../../component/Input";
 import validateRegister from "../../validators/validate-register";
+import * as authApi from "../../apis/auth-api";
+import { useNavigate } from "react-router-dom";
 
 const initialInput = {
-  firstname: "",
-  lastname: "",
+  firstName: "",
+  lastName: "",
   email: "",
   username: "",
   password: "",
@@ -15,19 +17,25 @@ const initialInput = {
 export default function Registerform() {
   const [input, setInput] = useState(initialInput);
   const [error, setError] = useState({});
-
+  const navigate = useNavigate();
   const handleChangeInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  const handleSubmitForm = (e) => {
-    e.preventDefault();
-    const result = validateRegister(input);
-    if (result) {
-      setError(result);
-    } else {
-      setError({});
-    }
+  const handleSubmitForm = async (e) => {
+    try {
+      e.preventDefault();
+      console.log(input);
+      const result = validateRegister(input);
+      if (result) {
+        setError(result);
+      } else {
+        setError({});
+        await authApi.register(input);
+        setInput(initialInput);
+        navigate("/login");
+      }
+    } catch (err) {}
   };
 
   return (
@@ -41,29 +49,29 @@ export default function Registerform() {
       <form onSubmit={handleSubmitForm}>
         <div className=" flex justify-center w-full">
           <div className="mx-5">
-            <label for="firstname">
-              <b className="">firstname</b>
+            <label for="firstName">
+              <b className="">firstName</b>
               <br />
             </label>
             <Input
               placeholder="First name"
-              name="firstname"
-              value={input.firstname}
+              name="firstName"
+              value={input.firstName}
               onChange={handleChangeInput}
-              error={error.firstname}
+              error={error.firstName}
             />
           </div>
           <div>
-            <label for="lastname">
-              <b>lastname</b>
+            <label for="lastName">
+              <b>lastName</b>
               <br />
             </label>
             <Input
-              placeholder="Lastname name"
-              name="lastname"
-              value={input.lastname}
+              placeholder="lastName name"
+              name="lastName"
+              value={input.lastName}
               onChange={handleChangeInput}
-              error={error.lastname}
+              error={error.lastName}
             />
           </div>
         </div>

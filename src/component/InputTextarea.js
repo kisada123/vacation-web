@@ -1,4 +1,4 @@
-export default function Input({
+export default function Textarea({
   type,
   placeholder,
   name,
@@ -8,7 +8,7 @@ export default function Input({
 }) {
   return (
     <>
-      <input
+      <textarea
         className="form-control"
         type={type || "text"}
         placeholder={placeholder}

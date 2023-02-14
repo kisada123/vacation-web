@@ -5,7 +5,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import Edit from "./Edit";
 import Detail from "./Detail";
 import useAuth from "../hooks/useAuth";
-import { getAll } from "../apis/vacation-api";
+import { getAllAdminVacation } from "../apis/vacation-api";
 import { useNavigate } from "react-router-dom";
 
 import * as vacationApi from "../apis/vacation-api";
@@ -17,7 +17,7 @@ import * as vacationApi from "../apis/vacation-api";
 
 // ++++++++++++++++++++++++++++++
 
-function Home() {
+function HomeAdmin() {
   const [openAdd, setOpenAdd] = useState(false);
   const [openEdit, setOpenEdit] = useState(false);
   const [openDetail, setOpenDetail] = useState(false);
@@ -31,7 +31,7 @@ function Home() {
   useEffect(() => {
     const getAllVacation = async () => {
       try {
-        const result = await getAll();
+        const result = await getAllAdminVacation();
         // console.log(result);
         setVacationData(result.data.data);
       } catch (err) {
@@ -47,17 +47,16 @@ function Home() {
     setSelectedVacation(foundVacation);
     setOpenDetail(true);
   };
-  const handleEditModal = (id) => {
-    const foundVacation = vacationData.find((vacation) => vacation.id === id);
-    console.log(foundVacation);
-    setSelectedVacation(foundVacation);
-    setOpenEdit(true);
+
+  const handleReject = async (id) => {
+    await vacationApi.rejectVacation(id);
+
+    window.location.reload(false);
   };
+  const handleApprove = async (id) => {
+    await vacationApi.approveVacation(id);
 
-  const handledelete = async (id) => {
-    await vacationApi.deleteVacation(id);
-
-    navigate("/login");
+    window.location.reload(false);
   };
 
   return (
@@ -96,18 +95,6 @@ function Home() {
       {/* nav-End*/}
       {/*  body*/}
       <div>
-        <button
-          type="submit"
-          className="bg-lime-500  rounded-md py-2  mt-12 w-40 ml-10  border-none cursor-pointer  opacity-90 hover:opacity-100 "
-          onClick={() => setOpenAdd(true)}
-        >
-          เพิ่มรายการวันหยุด
-          {/* {AuthAddItem.map((el) => (
-            <NavLink key={el.path} to={el.path}>
-              {el.text}
-            </NavLink>
-          ))} */}
-        </button>
         {/* modal */}
         <div
           className={`modal fade show ${openAdd ? "d-block" : ""}`}
@@ -136,7 +123,7 @@ function Home() {
       {/* End modal */}
       <div className=" rounded-md  ">
         <div>
-          <table class="table">
+          <table class="table my-10">
             <thead className="border-2">
               <tr>
                 <th className="border-2">วันที่ทำรายการ</th>
@@ -206,52 +193,21 @@ function Home() {
                       {/* End modal */}
 
                       <button
-                        type="submit"
                         className="bg-lime-500  rounded-md w-20 ml-2  border-none cursor-pointer  opacity-90 hover:opacity-100"
-                        onClick={() => handleEditModal(el.id)}
+                        onClick={() => handleApprove(el.id)}
                       >
-                        แก้ไข
+                        อนุมัติ
                       </button>
                       {/* modal */}
-                      <div
-                        className={`modal fade show ${
-                          openEdit ? "d-block" : ""
-                        }`}
-                        tabIndex="-1"
-                      >
-                        <div className="modal-dialog modal-dialog-centered">
-                          <div className="modal-content">
-                            <div className="modal-header">
-                              <button
-                                type="button"
-                                className="btn-close invisible"
-                              />
-                              <h5 className="modal-title">แก้ไข</h5>
-                              <h5 className="modal-title">
-                                (รายยละเอียดคำขออนุมัติลา)
-                              </h5>
-                              <button
-                                type="button"
-                                className="btn-close"
-                                onClick={() => setOpenEdit(false)}
-                              />
-                            </div>
-                            <div className="modal-body">
-                              <Edit vacationData={selectedVacation} />
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      {openEdit && <div className="modal-backdrop fade show" />}
 
                       {/* End modal */}
 
                       <button
                         className="px-2 mx-2 bg-red-600 rounded-md
                       "
-                        onClick={() => handledelete(el.id)}
+                        onClick={() => handleReject(el.id)}
                       >
-                        ลบ
+                        ไม่อนุมัติ
                       </button>
                     </td>
                   </tr>
@@ -266,4 +222,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomeAdmin;

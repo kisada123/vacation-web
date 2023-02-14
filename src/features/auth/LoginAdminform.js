@@ -1,19 +1,22 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 import useAuth from "../../hooks/useAuth";
 
-export default function Loginform() {
+export default function LoginAdminform() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { login } = useAuth();
+  const { loginAdmin } = useAuth();
 
   const handleSubmitFrom = async (e) => {
     try {
       e.preventDefault();
-      await login(email, password);
+      await loginAdmin(email, password);
       toast.success("ล็อกอินสำเร็จ");
+      navigate("/HomeAdmin");
     } catch (err) {
       console.log(err);
       toast.error(err.response?.data.message);

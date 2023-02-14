@@ -1,10 +1,10 @@
 import Joi from "joi";
 
 const RegisterSchema = Joi.object({
-  firstname: Joi.string().trim().required().messages({
+  firstName: Joi.string().trim().required().messages({
     "string.empty": "กรุณา ใส่ชื่อ",
   }),
-  lastname: Joi.string().trim().required().messages({
+  lastName: Joi.string().trim().required().messages({
     "string.empty": "กรุณา ใส่นามสกุล",
   }),
   username: Joi.string().trim().required().messages({

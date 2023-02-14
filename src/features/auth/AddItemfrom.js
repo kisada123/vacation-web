@@ -1,17 +1,25 @@
-import { React, useState, useEffect } from "react";
-import validateVacation from "../validators/validate-vocation";
-import * as vacationApi from "../apis/vacation-api";
+import { useState } from "react";
+
+import Input from "../../component/Input";
+import validateVacation from "../../validators/validate-vocation";
+import * as vacationApi from "../../apis/vacation-api";
 import { useNavigate } from "react-router-dom";
+import Textarea from "../../component/InputTextarea";
+import Select from "../../component/InputSelect";
 
-export default function Edit(prop) {
-  const { vacationData } = prop;
-  const navigate = useNavigate();
+const initialInput = {
+  typeOfLeave: "",
+  department: "",
+  reason: "",
+  createdAt: "",
+  updatedAt: "",
+  type: "create",
+};
+
+export default function AddItemfrom() {
+  const [input, setInput] = useState(initialInput);
   const [error, setError] = useState({});
-
-  const [input, setInput] = useState();
-  useEffect(() => {
-    setInput(vacationData);
-  }, [vacationData]);
+  const navigate = useNavigate();
   const handleChangeInput = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
@@ -19,85 +27,79 @@ export default function Edit(prop) {
   const handleSubmitForm = async (e) => {
     try {
       e.preventDefault();
-      console.log("submitform");
+      console.log(input);
       const result = validateVacation(input);
-      console.log("result", result);
-
+      console.log("aaa", result);
       if (result) {
         setError(result);
       } else {
         setError({});
-        await vacationApi.updateVacation(input);
-
+        await vacationApi.vacation(input);
+        setInput(initialInput);
         navigate("/login");
       }
     } catch (err) {}
   };
 
-  console.log("Edit", vacationData);
-  console.log("input", input);
-  console.log("prop", prop);
-
   return (
     <form onSubmit={handleSubmitForm} className="row gx-2 gy-3">
       <div className="col-12">
-        ประเภทการลา
-        <input
+        ประเภทการลา++++
+        <Select
           name="typeOfLeave"
-          className="form-control"
-          type="text"
-          value={input?.typeOfLeave}
+          value={input.typeOfLeave}
           onChange={handleChangeInput}
-
-          // placeholder="First name"
+          error={error.typeOfLeave}
         />
       </div>
 
       <div className="col-12">
         แผนก
-        <input
+        <Input
+          placeholder="แผนก"
           name="department"
-          className="form-control"
-          type="text"
-          // placeholder="Mobile number or email address"
-          value={input?.department}
+          value={input.department}
           onChange={handleChangeInput}
+          error={error.department}
         />
       </div>
       <div className="col-12">
-        {" "}
         รายละเอียด/เหตุผลการลา
-        <textarea
+        <Textarea
+          placeholder="เหตุผล"
           name="reason"
-          className="form-control"
-          type="text"
-          // placeholder="New password"
-          value={input?.reason}
+          value={input.reason}
           onChange={handleChangeInput}
+          error={error.reason}
         />
       </div>
+
       <div className="col-6">
         วันทีเริ่มต้น
-        <input
+        <Input
+          placeholder="ใส่วันที่เริ่มต้น"
           name="createdAt"
-          className="form-control"
-          type="text"
-          // placeholder="Confirm password"
-          value={input?.createdAt}
+          value={input.createdAt}
           onChange={handleChangeInput}
+          error={error.createdAt}
         />
       </div>
       <div className="col-6">
         วันทีสิ้นสุด
-        <input
-          name="updatedAt"
+        {/* <input
           className="form-control "
           type="text"
           // placeholder="Confirm password"
-          value={input?.updatedAt}
+        /> */}
+        <Input
+          placeholder="ใส่วันที่สิ้นสุด"
+          name="updatedAt"
+          value={input.updatedAt}
           onChange={handleChangeInput}
+          error={error.updatedAt}
         />
       </div>
+
       <div className="d-flex justify-content-center">
         <button type="submit" class="btn btn-success">
           บันทึก
