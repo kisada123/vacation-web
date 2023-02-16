@@ -27,7 +27,7 @@ export default function LoginAdminform() {
     <div>
       <div className="justify-center  border-2">
         <div className="text-8xl text-red-400 flex justify-center my-20">
-          Vacation
+          Vacation Admin
         </div>
 
         <div className="text-5xl flex justify-center mb-8">ยินดีต้อนรับ</div>

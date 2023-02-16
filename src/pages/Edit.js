@@ -83,7 +83,7 @@ export default function Edit(prop) {
           className="form-control"
           type="text"
           // placeholder="Confirm password"
-          value={input?.createdAt}
+          value={input?.createdAt.slice(0, 10)}
           onChange={handleChangeInput}
         />
       </div>
@@ -94,7 +94,7 @@ export default function Edit(prop) {
           className="form-control "
           type="text"
           // placeholder="Confirm password"
-          value={input?.updatedAt}
+          value={input?.updatedAt.slice(0, 10)}
           onChange={handleChangeInput}
         />
       </div>

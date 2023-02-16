@@ -83,7 +83,10 @@ function Home() {
         <div>อนุมัติ</div>
         <div>ไม่อนุมัติ</div>
         <div>
-          <button className="text-white" onClick={logout}>
+          <button
+            className="bg-lime-500  rounded-md py-2 w-40 ml-10  border-none cursor-pointer  opacity-90 hover:opacity-100 "
+            onClick={logout}
+          >
             {" "}
             {logout2.map((el) => (
               <NavLink key={el.path} to={el.path}>
@@ -98,7 +101,7 @@ function Home() {
       <div>
         <button
           type="submit"
-          className="bg-lime-500  rounded-md py-2  mt-12 w-40 ml-10  border-none cursor-pointer  opacity-90 hover:opacity-100 "
+          className="bg-lime-500  rounded-md py-2 mb-10 mt-12 w-40 ml-10  border-none cursor-pointer  opacity-90 hover:opacity-100 "
           onClick={() => setOpenAdd(true)}
         >
           เพิ่มรายการวันหยุด
@@ -143,23 +146,22 @@ function Home() {
                 <th className="border-2">ประเภทการลา</th>
                 <th className="border-2">วันที่ลาหยุด</th>
                 <th className="border-2">สถานะ</th>
-                <th className="border-2">วัน</th>
-                <th> zz</th>
+                <th className="border-2"> วัน</th>
+                <th className="border-2"></th>
               </tr>
             </thead>
             <tbody className="border-2">
               {vacationData.map((el) => {
                 return (
                   <tr>
-                    <td className="border-2">{el.createdAt}</td>
+                    <td className="border-2">{el.createdAt.slice(0, 10)}</td>
                     <td className="border-2">{el.typeOfLeave}</td>
-                    <td className="border-2">
-                      {el.createdAt}
-                      {el.updatedAt}
+                    <td className="border-2 ">
+                      {el.createdAt.slice(0, 10)}-{el.updatedAt.slice(0, 10)}
                     </td>
 
                     <td className="border-2">{el.status}</td>
-
+                    <td className="border-2">{}</td>
                     <td>
                       <button
                         type="submit"

@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import Header from "../component/Header";
+import HeaderAdmin from "../component/HeaderAdmin";
 import AddItem from "./AddItem";
 import { Link, NavLink, useLocation } from "react-router-dom";
 import Edit from "./Edit";
@@ -25,7 +25,7 @@ function HomeAdmin() {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
-  const logout2 = [{ path: "/login", text: "ออกจากระบบ" }];
+  // const logout2 = [{ path: "/loginAdmin", text: "ออกจากระบบ" }];
 
   const [vacationData, setVacationData] = useState([]);
   useEffect(() => {
@@ -40,7 +40,7 @@ function HomeAdmin() {
     };
     getAllVacation();
   }, []);
-  console.log("HOME", vacationData);
+  // console.log("HOME", vacationData);
   const handleOpenModal = (id) => {
     const foundVacation = vacationData.find((vacation) => vacation.id === id);
     console.log(foundVacation);
@@ -65,11 +65,11 @@ function HomeAdmin() {
 
       <div className="flex justify-between bg-gray-300  h-48">
         <div className="text-8xl text-red-400 flex items-center ">
-          <div className="">Vacation</div>
+          <div className="">Vacation Admin</div>
         </div>
 
         <div className="text-1xl my-8 ">
-          <Header />
+          <HeaderAdmin />
         </div>
       </div>
       <div>
@@ -82,14 +82,14 @@ function HomeAdmin() {
         <div>อนุมัติ</div>
         <div>ไม่อนุมัติ</div>
         <div>
-          <button className="text-white" onClick={logout}>
+          {/* <button className="text-white" onClick={logout}>
             {" "}
             {logout2.map((el) => (
               <NavLink key={el.path} to={el.path}>
                 {el.text}
               </NavLink>
             ))}
-          </button>
+          </button> */}
         </div>
       </div>
       {/* nav-End*/}
@@ -131,21 +131,21 @@ function HomeAdmin() {
                 <th className="border-2">วันที่ลาหยุด</th>
                 <th className="border-2">สถานะ</th>
                 <th className="border-2">วัน</th>
-                <th> zz</th>
+                <th className="border-2"></th>
               </tr>
             </thead>
             <tbody className="border-2">
               {vacationData.map((el) => {
                 return (
                   <tr>
-                    <td className="border-2">{el.createdAt}</td>
+                    <td className="border-2">{el.createdAt.slice(0, 10)}</td>
                     <td className="border-2">{el.typeOfLeave}</td>
-                    <td className="border-2">
-                      {el.createdAt}
-                      {el.updatedAt}
+                    <td className="border-2 ">
+                      {el.createdAt.slice(0, 10)}-{el.updatedAt.slice(0, 10)}
                     </td>
 
                     <td className="border-2">{el.status}</td>
+                    <td className="border-2">{}</td>
 
                     <td>
                       <button

@@ -4,7 +4,7 @@ import useAuth from "../hooks/useAuth";
 export default function Detail(prop) {
   const { authenticatedUser } = useAuth();
   const { vacationData } = prop;
-  console.log("Detail", vacationData);
+  // console.log("Detail", vacationData);
   return (
     <form className="row gx-2 gy-3">
       <div className=" col-6">
@@ -31,7 +31,7 @@ export default function Detail(prop) {
       </div>
       <div className="col-6">
         วันที่
-        <h5>{vacationData?.createdAt}</h5>
+        <h5>{vacationData?.createdAt.slice(0, 10)}</h5>
       </div>
       <div className="col-6">
         จำนวนวันที่ลา

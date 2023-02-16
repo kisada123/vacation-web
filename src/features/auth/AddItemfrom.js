@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import Input from "../../component/Input";
+import InputDate from "../../component/InputDate";
 import validateVacation from "../../validators/validate-vocation";
 import * as vacationApi from "../../apis/vacation-api";
 import { useNavigate } from "react-router-dom";
@@ -44,7 +45,7 @@ export default function AddItemfrom() {
   return (
     <form onSubmit={handleSubmitForm} className="row gx-2 gy-3">
       <div className="col-12">
-        ประเภทการลา++++
+        ประเภทการลา
         <Select
           name="typeOfLeave"
           value={input.typeOfLeave}
@@ -76,7 +77,7 @@ export default function AddItemfrom() {
 
       <div className="col-6">
         วันทีเริ่มต้น
-        <Input
+        <InputDate
           placeholder="ใส่วันที่เริ่มต้น"
           name="createdAt"
           value={input.createdAt}
@@ -91,7 +92,7 @@ export default function AddItemfrom() {
           type="text"
           // placeholder="Confirm password"
         /> */}
-        <Input
+        <InputDate
           placeholder="ใส่วันที่สิ้นสุด"
           name="updatedAt"
           value={input.updatedAt}
