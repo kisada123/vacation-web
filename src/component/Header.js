@@ -22,6 +22,7 @@ function Header() {
           <div>{authenticatedUser.lastName}</div>
         </h5>
       </div>
+
       <div className="mx-2">
         <button
           type="submit"

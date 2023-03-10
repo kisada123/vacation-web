@@ -127,6 +127,8 @@ function HomeAdmin() {
             <thead className="border-2">
               <tr>
                 <th className="border-2">วันที่ทำรายการ</th>
+                <th className="border-2">ชื่อ</th>
+                <th className="border-2">นามสกุล</th>
                 <th className="border-2">ประเภทการลา</th>
                 <th className="border-2">วันที่ลาหยุด</th>
                 <th className="border-2">สถานะ</th>
@@ -139,6 +141,8 @@ function HomeAdmin() {
                 return (
                   <tr>
                     <td className="border-2">{el.createdAt.slice(0, 10)}</td>
+                    <td className="border-2">ชื่อ</td>
+                    <td className="border-2">นามสกุล</td>
                     <td className="border-2">{el.typeOfLeave}</td>
                     <td className="border-2 ">
                       {el.createdAt.slice(0, 10)}-{el.updatedAt.slice(0, 10)}
