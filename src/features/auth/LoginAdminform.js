@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -11,11 +11,11 @@ export default function LoginAdminform() {
 
   const { loginAdmin } = useAuth();
 
-  const handleSubmitFrom = async (e) => {
+  const handleSubmitForm = async (e) => {
     try {
       e.preventDefault();
       await loginAdmin(email, password);
-      toast.success("ล็อกอินสำเร็จ");
+      console.log(loginAdmin ?? "loginAdmin is undefined");
       navigate("/HomeAdmin");
     } catch (err) {
       console.log(err);
@@ -23,24 +23,26 @@ export default function LoginAdminform() {
     }
   };
 
+  // useEffect(() => {
+  //   getAccessTokenAdmin() ? navigate("/HomeAdmin") : null;
+  // }, []);
+
   return (
     <div>
-      <div className="justify-center  border-2">
+      <div className="justify-center border-2">
         <div className="text-8xl text-red-400 flex justify-center my-20">
           Vacation Admin
         </div>
-
         <div className="text-5xl flex justify-center mb-8">ยินดีต้อนรับ</div>
-
-        <form onSubmit={handleSubmitFrom}>
-          <div className=" flex justify-center">
+        <form onSubmit={handleSubmitForm}>
+          <div className="flex justify-center">
             <div className="mx-5">
-              <label for="email">
+              <label htmlFor="email">
                 <b className="">email</b>
                 <br />
               </label>
               <input
-                className="border border-black py-2 px-5 my-2 w-60 "
+                className="border border-black py-2 px-5 my-2 w-60"
                 type="text"
                 placeholder="Enter email"
                 name="email"
@@ -50,14 +52,14 @@ export default function LoginAdminform() {
               />
             </div>
           </div>
-          <div className=" flex justify-center">
+          <div className="flex justify-center">
             <div className="mx-5">
-              <label for="password">
+              <label htmlFor="password">
                 <b className="">password</b>
                 <br />
               </label>
               <input
-                className="border border-black py-2 px-5 my-2 w-60 "
+                className="border border-black py-2 px-5 my-2 w-60"
                 type="password"
                 placeholder="Enter password"
                 name="password"
@@ -67,11 +69,10 @@ export default function LoginAdminform() {
               />
             </div>
           </div>
-
           <div className="flex justify-center">
             <button
               type="submit"
-              className="bg-black text-white py-2 px-5 my-10 w-60   border-none cursor-pointer  opacity-90 hover:opacity-100"
+              className="bg-black text-white py-2 px-5 my-10 w-60 border-none cursor-pointer opacity-90 hover:opacity-100"
             >
               NEXT
             </button>

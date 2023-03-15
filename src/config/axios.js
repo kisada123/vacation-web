@@ -1,13 +1,15 @@
 import axios from "axios";
-import { getAccessToken } from "../utils/local-storage";
+import { getAccessToken, getAccessTokenAdmin } from "../utils/local-storage";
 
 // console.log(process.env.REACT_APP_ENDPOINT_URL);
 axios.defaults.baseURL = process.env.REACT_APP_ENDPOINT_URL;
 
 axios.interceptors.request.use(
   (config) => {
-    if (getAccessToken()) {
-      config.headers.authorization = `Bearer ${getAccessToken()}`;
+    if (getAccessToken() || getAccessTokenAdmin()) {
+      config.headers.authorization = `Bearer ${
+        getAccessToken() || getAccessTokenAdmin()
+      }`;
     }
     return config;
   },

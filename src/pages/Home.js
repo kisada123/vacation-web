@@ -8,7 +8,13 @@ import useAuth from "../hooks/useAuth";
 import { getAll } from "../apis/vacation-api";
 import { useNavigate } from "react-router-dom";
 
+import dateFormat, { masks } from "dateformat";
+
 import * as vacationApi from "../apis/vacation-api";
+
+// var now = new Date();
+// dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+// console.log("dateFormat", dateFormat(now, "dd-mm-yyyy "));
 
 // const { authenticatedUser } = useAuth();
 
@@ -25,7 +31,11 @@ function Home() {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
-  const logout2 = [{ path: "/login", text: "ออกจากระบบ" }];
+  // const { authenticatedUser } = useAuth();
+
+  const [update, setUpdate] = useState(false);
+
+  // const logout2 = [{ path: "/login", text: "ออกจากระบบ" }];
 
   const [vacationData, setVacationData] = useState([]);
   useEffect(() => {
@@ -40,7 +50,10 @@ function Home() {
     };
     getAllVacation();
   }, []);
-  console.log("HOME", vacationData);
+  console.log(vacationData);
+
+  // console.log("HOME", vacationData);
+
   const handleOpenModal = (id) => {
     const foundVacation = vacationData.find((vacation) => vacation.id === id);
     console.log(foundVacation);
@@ -55,6 +68,7 @@ function Home() {
   };
 
   const handledelete = async (id) => {
+    console.log(id);
     await vacationApi.deleteVacation(id);
 
     navigate("/login");
@@ -78,23 +92,10 @@ function Home() {
       </div>
       {/* Header-End*/}
       {/* nav*/}
-      <div className="flex space-x-24 bg-blue-600 p-2 text-white">
-        <div>หน้าหลัก</div>
+      <div className="flex space-x-24 bg-blue-400 p-2 text-white  h-10">
+        {/* <div>หน้าหลัก</div>
         <div>อนุมัติ</div>
-        <div>ไม่อนุมัติ</div>
-        <div>
-          <button
-            className="bg-lime-500  rounded-md py-2 w-40 ml-10  border-none cursor-pointer  opacity-90 hover:opacity-100 "
-            onClick={logout}
-          >
-            {" "}
-            {logout2.map((el) => (
-              <NavLink key={el.path} to={el.path}>
-                {el.text}
-              </NavLink>
-            ))}
-          </button>
-        </div>
+        <div>ไม่อนุมัติ</div> */}
       </div>
       {/* nav-End*/}
       {/*  body*/}
@@ -143,6 +144,8 @@ function Home() {
             <thead className="border-2">
               <tr>
                 <th className="border-2">วันที่ทำรายการ</th>
+                <th className="border-2">ชื่อ</th>
+                <th className="border-2">นามสกุล</th>
                 <th className="border-2">ประเภทการลา</th>
                 <th className="border-2">วันที่ลาหยุด</th>
                 <th className="border-2">สถานะ</th>
@@ -152,16 +155,27 @@ function Home() {
             </thead>
             <tbody className="border-2">
               {vacationData.map((el) => {
+                const startDate = new Date(el.startDate);
+                const endDate = new Date(el.endDate);
+                const resultDate = endDate - startDate;
+
                 return (
                   <tr>
-                    <td className="border-2">{el.createdAt.slice(0, 10)}</td>
+                    <td className="border-2">
+                      {dateFormat(el.createdAt, "dd-mm-yyyy ")}
+                    </td>
+                    <td className="border-2"> {el.User.firstName}</td>
+                    <td className="border-2">{el.User.lastName}</td>
                     <td className="border-2">{el.typeOfLeave}</td>
                     <td className="border-2 ">
-                      {el.createdAt.slice(0, 10)}-{el.updatedAt.slice(0, 10)}
+                      {dateFormat(el.startDate, "dd-mm-yyyy ")} -{" "}
+                      {dateFormat(el.endDate, "dd-mm-yyyy ")}
                     </td>
 
                     <td className="border-2">{el.status}</td>
-                    <td className="border-2">{}</td>
+                    <td className="border-2">
+                      {resultDate / 1000 / 60 / 60 / 24}
+                    </td>
                     <td>
                       <button
                         type="submit"

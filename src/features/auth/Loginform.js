@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
-
+import { Link, NavLink, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
 export default function Loginform() {
@@ -72,6 +72,17 @@ export default function Loginform() {
             >
               NEXT
             </button>
+          </div>
+
+          <div className="flex justify-center">
+            <Link to={"/Register"}>
+              <button
+                type="submit"
+                className="bg-lime-400 text-white py-2 px-5 w-60   border-none cursor-pointer  opacity-90 hover:opacity-100"
+              >
+                Register
+              </button>
+            </Link>
           </div>
         </form>
       </div>

@@ -3,6 +3,8 @@ import validateVacation from "../validators/validate-vocation";
 import * as vacationApi from "../apis/vacation-api";
 import { useNavigate } from "react-router-dom";
 
+import dateFormat, { masks } from "dateformat";
+
 export default function Edit(prop) {
   const { vacationData } = prop;
   const navigate = useNavigate();
@@ -34,9 +36,9 @@ export default function Edit(prop) {
     } catch (err) {}
   };
 
-  console.log("Edit", vacationData);
-  console.log("input", input);
-  console.log("prop", prop);
+  // console.log("Edit", vacationData);
+  // console.log("input", input);
+  // console.log("prop", prop);
 
   return (
     <form onSubmit={handleSubmitForm} className="row gx-2 gy-3">
@@ -79,22 +81,22 @@ export default function Edit(prop) {
       <div className="col-6">
         วันทีเริ่มต้น
         <input
-          name="createdAt"
+          name="startDate"
           className="form-control"
-          type="text"
+          type="date"
           // placeholder="Confirm password"
-          value={input?.createdAt.slice(0, 10)}
+          value={dateFormat(input?.startDate, "dd-mm-yyyy ")}
           onChange={handleChangeInput}
         />
       </div>
       <div className="col-6">
         วันทีสิ้นสุด
         <input
-          name="updatedAt"
+          name="endDate"
           className="form-control "
-          type="text"
+          type="date"
           // placeholder="Confirm password"
-          value={input?.updatedAt.slice(0, 10)}
+          value={dateFormat(input?.endDate, "dd-mm-yyyy ")}
           onChange={handleChangeInput}
         />
       </div>

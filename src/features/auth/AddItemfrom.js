@@ -7,6 +7,7 @@ import * as vacationApi from "../../apis/vacation-api";
 import { useNavigate } from "react-router-dom";
 import Textarea from "../../component/InputTextarea";
 import Select from "../../component/InputSelect";
+import dateFormat, { masks } from "dateformat";
 
 const initialInput = {
   typeOfLeave: "",
@@ -14,6 +15,8 @@ const initialInput = {
   reason: "",
   createdAt: "",
   updatedAt: "",
+  startDate: "",
+  endDate: "",
   type: "create",
 };
 
@@ -28,6 +31,9 @@ export default function AddItemfrom() {
   const handleSubmitForm = async (e) => {
     try {
       e.preventDefault();
+      input.createdAt = dateFormat(new Date(), "mm-dd-yyyy");
+      input.updatedAt = dateFormat(new Date(), "mm-dd-yyyy");
+      input.type = "create";
       console.log(input);
       const result = validateVacation(input);
       console.log("aaa", result);
@@ -79,10 +85,10 @@ export default function AddItemfrom() {
         วันทีเริ่มต้น
         <InputDate
           placeholder="ใส่วันที่เริ่มต้น"
-          name="createdAt"
-          value={input.createdAt}
+          name="startDate"
+          value={input.startDate}
           onChange={handleChangeInput}
-          error={error.createdAt}
+          error={error.startDate}
         />
       </div>
       <div className="col-6">
@@ -94,10 +100,10 @@ export default function AddItemfrom() {
         /> */}
         <InputDate
           placeholder="ใส่วันที่สิ้นสุด"
-          name="updatedAt"
-          value={input.updatedAt}
+          name="endDate"
+          value={input.endDate}
           onChange={handleChangeInput}
-          error={error.updatedAt}
+          error={error.endDate}
         />
       </div>
 

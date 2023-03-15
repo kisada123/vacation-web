@@ -1,7 +1,9 @@
 import React from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import RedirectIfAuthenticate from "../features/auth/RedirectAuthenticate";
+import RedirectAuthenticateAdmin from "../features/auth/RedirectAuthenticateAdmin";
 import ProtectedRoute from "../features/auth/ProtectedRoute";
+import ProtectedRouteAdmin from "../features/auth/ProtectedRouteAdmin";
 import Register from "../pages/Register";
 import Login from "../pages/Login";
 import Home from "../pages/Home";
@@ -14,11 +16,20 @@ import LoginAdmin from "../pages/LoginAdmin";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home />,
+
+    element: (
+      <ProtectedRoute>
+        <Home />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/HomeAdmin",
-    element: <HomeAdmin />,
+    element: (
+      <ProtectedRouteAdmin>
+        <HomeAdmin />
+      </ProtectedRouteAdmin>
+    ),
   },
   {
     path: "/Login",
@@ -30,11 +41,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/LoginAdmin",
-    element: (
-      <RedirectIfAuthenticate>
-        <LoginAdmin />
-      </RedirectIfAuthenticate>
-    ),
+    element: <LoginAdmin />,
   },
   {
     path: "/Register",

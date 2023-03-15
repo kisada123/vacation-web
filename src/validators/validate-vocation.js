@@ -10,10 +10,10 @@ const vacationSchema = Joi.object({
   reason: Joi.string().trim().required().messages({
     "string.empty": "กรุณา เหตุผล",
   }),
-  createdAt: Joi.string().trim().required().messages({
+  startDate: Joi.string().trim().required().messages({
     "string.empty": "กรุณา วันที่เริ่มต้นลา",
   }),
-  updatedAt: Joi.string().trim().required().messages({
+  endDate: Joi.string().trim().required().messages({
     "string.empty": "กรุณา วันที่สิ้นสุดลา",
   }),
   type: Joi.string().trim().required().messages({}),
@@ -29,10 +29,10 @@ const vacationEditSchema = Joi.object({
   reason: Joi.string().trim().required().messages({
     "string.empty": "กรุณา เหตุผล",
   }),
-  createdAt: Joi.string().trim().required().messages({
+  startDate: Joi.string().trim().required().messages({
     "string.empty": "กรุณา วันที่เริ่มต้นลา",
   }),
-  updatedAt: Joi.string().trim().required().messages({
+  endDate: Joi.string().trim().required().messages({
     "string.empty": "กรุณา วันที่สิ้นสุดลา",
   }),
   status: Joi.string().trim().required().messages({}),
